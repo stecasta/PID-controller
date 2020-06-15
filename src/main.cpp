@@ -32,17 +32,10 @@ string hasData(string s) {
 
 int main() {
   uWS::Hub h;
-  
-  double Kp = 1;
-  double Ki = 0;
-  double Kd = 0;
 
   PID pid;
-  pid.Init(Kp, Ki, Kd);
-
-  /**
-   * TODO: Initialize the pid variable.
-   */
+  pid.Init(0.05,0.0001,1.5);
+  std::cout<<"PID initialized"<<std::endl;
 
   h.onMessage([&pid](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, 
                      uWS::OpCode opCode) {
@@ -69,8 +62,11 @@ int main() {
            * NOTE: Feel free to play around with the throttle and speed.
            *   Maybe use another PID controller to control the speed!
            */
-          
-          
+          pid.UpdateError(cte);
+          steer_value = pid.TotalError();
+          // Bound steer_value between -1 and 1
+          steer_value = std::max(std::min(steer_value, 1.), -1.);
+
           // DEBUG
           std::cout << "CTE: " << cte << " Steering Value: " << steer_value 
                     << std::endl;
