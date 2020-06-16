@@ -67,6 +67,7 @@ I decided to tune the controller with a trial and error technique in order to un
  
  First, I increased the P term until the car started to oscillate. This value was P = 0.05. Then I increased the D value
   until the oscillation went away (D = 1.5).
+  Step 1 and 2 were iterated until the derivative effect couldn't stabilize anymore the system. This values were P = 0.06 and D = 1.29.
  For this project the I term didn't seem to have a great impact, probably because we are using a simulation and the
   model error is not an issue. The place where it did seem to help was in sharp turns. I found that a good value for
    the I term was 0.0001. 
